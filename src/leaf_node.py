@@ -1,4 +1,4 @@
-from htmlnode import HTMLNode
+from html_node import HTMLNode
 
 class LeafNode(HTMLNode):
     def __init__(self, tag: str|None = None, value: str|None = None,
@@ -13,8 +13,6 @@ class LeafNode(HTMLNode):
             return self.value
         else:
             html_attrs: str = self.props_to_html()
-            print(self.props)
-            print(f"html_attrs: {html_attrs}")
             return f"<{self.tag}{html_attrs}>{self.value}</{self.tag}>"
 
     def __repr__(self):

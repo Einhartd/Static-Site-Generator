@@ -1,4 +1,4 @@
-from textnode import TextNode, TextType
+from text_node import TextNode, TextType
 
 
 if __name__ == "__main__":

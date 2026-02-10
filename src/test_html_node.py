@@ -1,12 +1,11 @@
 import unittest
 
-from htmlnode import HTMLNode
+from html_node import HTMLNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_child_eq(self):
         node_child = HTMLNode("h1", "test_eq")
         node = HTMLNode("p", "main_node", [node_child], {"href": "https://www.google.com"})
-        print(node)
         self.assertEqual(node.children[0], node_child)
 
     def test_none_eq(self):
