@@ -17,9 +17,6 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
                 raise Exception("Invalid Markdown syntax (err 0)")
             
             split_text = old.text.split(delimiter)
-
-            if len(split_text) != 3:
-                raise Exception("Invalid Markdown syntax (err 1)")
             
             for i in range(len(split_text)):
                 if split_text[i]!="":
