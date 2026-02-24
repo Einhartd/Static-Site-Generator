@@ -31,7 +31,6 @@ This is **bolded** paragraph
 This is another paragraph with _italic_ text and `code` here
 """
         blocks = markdown_to_blocks(md)
-        print(blocks)
         self.assertEqual(
             blocks,
             [
