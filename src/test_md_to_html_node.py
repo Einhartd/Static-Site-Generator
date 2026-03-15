@@ -146,3 +146,17 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
+
+    def test_blockquote_renders(self):
+        markdown = """> "I am in fact a Hobbit in all but size."
+                    >
+                    > -- J.R.R. Tolkien
+                    """
+
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+
+        self.assertIn("<blockquote>", html)
+        self.assertIn('"I am in fact a Hobbit in all but size."', html)
+        self.assertIn("-- J.R.R. Tolkien", html)
+        self.assertIn("</blockquote>", html)

@@ -11,7 +11,7 @@ class BlockType(Enum):
 
 def block_to_block_type(text_block: str) -> BlockType:
     heading_regex: str = r"^#{1,6}\s.*"
-    quote_regex: str = r"^>(\s*).+"
+    quote_regex: str = r"^>(\s*).*"
     unordered_regex: str = r"^-\s(.*)"
     ordered_regex: str = r"^(\d+)\.\s.+"
 
