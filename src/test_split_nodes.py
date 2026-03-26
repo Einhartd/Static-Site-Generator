@@ -180,3 +180,17 @@ class TestSplitNodeLink(unittest.TestCase):
             ],
             new_nodes
         )
+        
+    def test_bold_multiple(self):
+        node = TextNode("hello **Glorfindel** and **Legolas** world", TextType.TEXT)
+        result = split_nodes_delimiter([node], "**", TextType.BOLD)
+        self.assertListEqual(
+            [
+                TextNode("hello ", TextType.TEXT),
+                TextNode("Glorfindel", TextType.BOLD),
+                TextNode(" and ", TextType.TEXT),
+                TextNode("Legolas", TextType.BOLD),
+                TextNode(" world", TextType.TEXT)
+            ],
+            result
+        )

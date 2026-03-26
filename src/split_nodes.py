@@ -20,11 +20,10 @@ def split_nodes_delimiter(old_nodes: list[TextNode],
             split_text = old.text.split(delimiter)
             
             for i in range(len(split_text)):
-                if split_text[i]!="":
-                    if i == 1:
-                        split_node.append(TextNode(split_text[i], text_type=text_type))
-                    else:
-                        split_node.append(TextNode(split_text[i], TextType.TEXT))
+                if split_text[i] != "" and i % 2 != 0:
+                    split_node.append(TextNode(split_text[i], text_type=text_type))
+                elif split_text[i] != "":
+                    split_node.append(TextNode(split_text[i], TextType.TEXT))
 
             new_nodes.extend(split_node)
 

@@ -1,5 +1,6 @@
 import re
 import os
+import shutil
 from .markdown_to_html_node import markdown_to_html_node
 from .parent_node import ParentNode
 
@@ -35,3 +36,30 @@ def generate_page(from_path, template_path, dest_path):
     
     with open(dest_path, "w") as f:
         f.write(template_file_read)
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    print(f"Generating pages from {dir_path_content} to {dest_dir_path} using {template_path}")
+    
+    if os.listdir(dir_path_content):
+        for item in os.listdir(dir_path_content):
+            # get filepath of item
+            filepath = os.path.join(dir_path_content, item)
+            if os.path.isfile(filepath):
+                # prepare destination filepath
+                # get item name, cut format after '.' and change it to html
+                page_name_list = item.split('.')
+                if page_name_list and len(page_name_list)>1:
+                    page_name_list[-1] = "html"
+                    page_html = ".".join(page_name_list)
+                    # generate .html page from found file
+                    dest_path = os.path.join(dest_dir_path, page_html)
+                    generate_page(filepath, template_path, dest_path)
+                    print(f"Generated page from {filepath} to: {dest_dir_path}")
+            else:
+                # create folder in dest dir
+                dir_filepath = os.path.join(dest_dir_path, item)
+                if not os.path.isdir(dir_filepath): 
+                    os.mkdir(dir_filepath)
+                # recursive call
+                generate_pages_recursive(filepath, template_path, dir_filepath)

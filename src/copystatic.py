@@ -21,9 +21,12 @@ def copy_content(src_path, dst_path):
                 shutil.copy(filepath, dst_path)
                 print(f"Copied file: {filepath} to: {dst_path}")
             else:
-                #create folder in dst with item name
+                # src path leads to folder
                 dir_filepath = os.path.join(dst_path, item)
-                os.mkdir(dir_filepath)
+                # check if folder exists in dest dir
+                if not os.path.isdir(dir_filepath):
+                    # if not create folder
+                    os.mkdir(dir_filepath)
                 #recursive
                 copy_content(filepath, dir_filepath)
     else:
