@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
     basepath: str = ""
 
-    if len(sys.argv) < 2:
+    if len(sys.argv) >= 2:
         basepath = sys.argv[1]
     else:
         basepath = "/"
