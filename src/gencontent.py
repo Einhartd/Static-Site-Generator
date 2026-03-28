@@ -13,7 +13,7 @@ def extract_title(markdown: str) -> str:
             return line[match.span()[1]:]
     raise Exception("No h1 found.")
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}.")
 
     with open(from_path) as f:
@@ -30,6 +30,10 @@ def generate_page(from_path, template_path, dest_path):
     template_file_read = template_file_read.replace("{{ Title }}", page_title)
     template_file_read = template_file_read.replace("{{ Content }}", md_html_str)
 
+    # replacement with basepath
+    template_file_read = template_file_read.replace('href="/', f'href="{basepath}')
+    template_file_read = template_file_read.replace('src="/', f'src="{basepath}')
+
     dir_path = os.path.dirname(dest_path)
     if dir_path != "":
         os.makedirs(dir_path, exist_ok=True)
@@ -38,7 +42,7 @@ def generate_page(from_path, template_path, dest_path):
         f.write(template_file_read)
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     print(f"Generating pages from {dir_path_content} to {dest_dir_path} using {template_path}")
     
     if os.listdir(dir_path_content):
@@ -54,7 +58,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
                     page_html = ".".join(page_name_list)
                     # generate .html page from found file
                     dest_path = os.path.join(dest_dir_path, page_html)
-                    generate_page(filepath, template_path, dest_path)
+                    generate_page(filepath, template_path, dest_path, basepath)
                     print(f"Generated page from {filepath} to: {dest_dir_path}")
             else:
                 # create folder in dest dir
@@ -62,4 +66,4 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
                 if not os.path.isdir(dir_filepath): 
                     os.mkdir(dir_filepath)
                 # recursive call
-                generate_pages_recursive(filepath, template_path, dir_filepath)
+                generate_pages_recursive(filepath, template_path, dir_filepath, basepath)
